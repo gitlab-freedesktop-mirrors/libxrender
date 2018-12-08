@@ -30,7 +30,7 @@ AC_PREREQ([2.60])
 # protocol, so Xrender version l.n.m corresponds to protocol version l.n
 #
 AC_INIT(libXrender, [0.9.10],
-	[https://bugs.freedesktop.org/enter_bug.cgi?product=xorg], [libXrender])
+	[https://gitlab.freedesktop.org/xorg/lib/libXrender/issues], [libXrender])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
 
