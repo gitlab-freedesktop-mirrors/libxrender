@@ -81,6 +81,8 @@ XRenderComputeIntersect (XLineFixed *l1, XLineFixed *l2)
     double  m2 = XRenderComputeInverseSlope (l2);
     double  b2 = XRenderComputeXIntercept (l2, m2);
 
+    if ( m1 == m2 ) return XDoubleToFixed(32766); /* lines don't intersect */
+
     return XDoubleToFixed ((b2 - b1) / (m1 - m2));
 }
 
@@ -88,16 +90,18 @@ static int
 XRenderComputeTrapezoids (Edge		*edges,
 			  int		nedges,
 			  int		winding,
-			  XTrapezoid	*traps)
+			  XTrapezoid	*traps,
+			  int           *ntraps,
+			  int           maxtraps)
 {
-    int		ntraps = 0;
-    int		inactive;
+    int		ok = 1, inactive;
     Edge	*active;
     Edge	*e, *en, *next;
     XFixed	y, next_y, intersect;
 
     qsort (edges, nedges, sizeof (Edge), CompareEdge);
 
+    *ntraps = 0;
     y = edges[0].edge.p1.y;
     active = NULL;
     inactive = 0;
@@ -182,7 +186,7 @@ XRenderComputeTrapezoids (Edge		*edges,
 		intersect = XRenderComputeIntersect (&e->edge, &e->next->edge);
 		/* make sure this point is below the actual intersection */
 		intersect = intersect + 1;
-		if (intersect < next_y)
+		if (intersect < next_y && intersect > y)
 		    next_y = intersect;
 	    }
 	}
@@ -198,7 +202,11 @@ XRenderComputeTrapezoids (Edge		*edges,
 	    traps->left = e->edge;
 	    traps->right = en->edge;
 	    traps++;
-	    ntraps++;
+	    (*ntraps)++;
+            if ( --maxtraps <= 0 ) {
+	       ok = 0;
+	       break;
+	    }
 	}
 
 	y = next_y;
@@ -218,7 +226,7 @@ XRenderComputeTrapezoids (Edge		*edges,
 	    }
 	}
     }
-    return ntraps;
+    return ok;
 }
 
 void
@@ -295,8 +303,9 @@ XRenderCompositeDoublePoly (Display		    *dpy,
 	prevx = x;
 	prevy = y;
     }
-    ntraps = XRenderComputeTrapezoids (edges, nedges, winding, traps);
-    /* XXX adjust xSrc/xDst */
-    XRenderCompositeTrapezoids (dpy, op, src, dst, maskFormat, xSrc, ySrc, traps, ntraps);
+    if ( XRenderComputeTrapezoids (edges, nedges, winding, traps, &ntraps, npoints * npoints )) {
+       /* XXX adjust xSrc/xDst */
+       XRenderCompositeTrapezoids (dpy, op, src, dst, maskFormat, xSrc, ySrc, traps, ntraps);
+    }
     Xfree (edges);
 }
