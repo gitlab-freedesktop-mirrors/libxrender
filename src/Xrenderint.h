@@ -25,7 +25,9 @@
 #ifndef _XRENDERINT_H_
 #define _XRENDERINT_H_
 
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include <X11/Xlibint.h>
 #include <X11/Xutil.h>
 #include <X11/extensions/renderproto.h>
