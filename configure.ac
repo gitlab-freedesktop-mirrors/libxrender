@@ -55,7 +55,7 @@ fi
 RENDER_VERSION=[`echo $VERSION | sed 's/^\([0-9][0-9]*\.[0-9][0-9]*\).*$/\1/'`]
 AC_SUBST(RENDER_VERSION)
 
-# Obtain compiler/linker options for depedencies
+# Obtain compiler/linker options for dependencies
 PKG_CHECK_MODULES(RENDER, [x11 >= 1.6] renderproto >= $RENDER_VERSION)
 
 AC_CONFIG_FILES([Makefile
