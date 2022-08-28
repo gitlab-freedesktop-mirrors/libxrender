@@ -249,8 +249,8 @@ XRenderCompositeDoublePoly (Display		    *dpy,
     XFixed	    x, y, prevx = 0, prevy = 0, firstx = 0, firsty = 0;
     XFixed	    top = 0, bottom = 0;	/* GCCism */
 
-    edges = (Edge *) Xmalloc (npoints * sizeof (Edge) +
-			      (npoints * npoints * sizeof (XTrapezoid)));
+    edges = Xmalloc ((npoints * sizeof (Edge)) +
+                     (npoints * npoints * sizeof (XTrapezoid)));
     if (!edges)
 	return;
     traps = (XTrapezoid *) (edges + npoints);

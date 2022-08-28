@@ -194,7 +194,7 @@ XRenderExtAddDisplay (XRenderExtInfo *extinfo,
 {
     XRenderExtDisplayInfo *dpyinfo;
 
-    dpyinfo = (XRenderExtDisplayInfo *) Xmalloc (sizeof (XRenderExtDisplayInfo));
+    dpyinfo = Xmalloc (sizeof (XRenderExtDisplayInfo));
     if (!dpyinfo) return NULL;
     dpyinfo->display = dpy;
     dpyinfo->info = NULL;
@@ -273,7 +273,7 @@ XRenderExtRemoveDisplay (XRenderExtInfo *extinfo, Display *dpy)
     if (dpyinfo == extinfo->cur) extinfo->cur = NULL;  /* flush cache */
     _XUnlockMutex(_Xglobal_lock);
 
-    Xfree ((char *) dpyinfo);
+    Xfree (dpyinfo);
     return 1;
 }
 
