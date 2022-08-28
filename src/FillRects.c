@@ -39,16 +39,17 @@ XRenderFillRectangles (Display		    *dpy,
 		       _Xconst XRectangle   *rectangles,
 		       int		    n_rects)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     xRenderFillRectanglesReq	*req;
-    long			len;
-    int				n;
 
     RenderSimpleCheckExtension (dpy, info);
     LockDisplay(dpy);
 
     while (n_rects)
     {
+	long	len;
+	int	n;
+
 	GetReq(RenderFillRectangles, req);
 
 	req->reqType = info->codes->major_opcode;

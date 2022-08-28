@@ -97,15 +97,16 @@ XRenderDepthCheckErrorHandler (Display *dpy, XErrorEvent *evt)
 {
     if (evt->request_code == X_CreatePixmap && evt->error_code == BadValue)
     {
-	DepthCheckPtr	d;
 	_XLockMutex(_Xglobal_lock);
-	for (d = depthChecks; d; d = d->next)
+	for (DepthCheckPtr d = depthChecks; d; d = d->next)
+	{
 	    if (d->dpy == dpy)
 	    {
 		if ((long) (evt->serial - d->serial) >= 0)
 		    d->missing |= DEPTH_MASK(evt->resourceid);
 		break;
 	    }
+        }
 	_XUnlockMutex (_Xglobal_lock);
     }
     return 0;
@@ -114,21 +115,18 @@ XRenderDepthCheckErrorHandler (Display *dpy, XErrorEvent *evt)
 static Bool
 XRenderHasDepths (Display *dpy)
 {
-    int	s;
-
-    for (s = 0; s < ScreenCount (dpy); s++)
+    for (int s = 0; s < ScreenCount (dpy); s++)
     {
 	CARD32		    depths = 0;
 	CARD32		    missing;
 	Screen		    *scr = ScreenOfDisplay (dpy, s);
-	int		    d;
 
-	for (d = 0; d < scr->ndepths; d++)
+	for (int d = 0; d < scr->ndepths; d++)
 	    depths |= DEPTH_MASK(scr->depths[d].depth);
 	missing = ~depths & REQUIRED_DEPTHS;
 	if (missing)
 	{
-	    DepthCheckRec   dc, **dp;
+	    DepthCheckRec   dc;
 	    XErrorHandler   previousHandler;
 
 	    /*
@@ -153,7 +151,7 @@ XRenderHasDepths (Display *dpy)
 	    /*
 	     * Try each missing depth and see if pixmap creation succeeds
 	     */
-	    for (d = 1; d <= 32; d++)
+	    for (int d = 1; d <= 32; d++)
 		/* don't check depth 1 == Xcursor recurses... */
 		if ((missing & DEPTH_MASK(d)) && d != 1)
 		{
@@ -167,7 +165,7 @@ XRenderHasDepths (Display *dpy)
 	     * Unhook from the list of depth check records
 	     */
 	    _XLockMutex(_Xglobal_lock);
-	    for (dp = &depthChecks; *dp; dp = &(*dp)->next)
+	    for (DepthCheckRec **dp = &depthChecks; *dp; dp = &(*dp)->next)
 	    {
 		if (*dp == &dc)
 		{
@@ -342,9 +340,7 @@ Status XRenderQueryVersion (Display *dpy,
 static XRenderPictFormat *
 _XRenderFindFormat (XRenderInfo *xri, PictFormat format)
 {
-    int	nf;
-
-    for (nf = 0; nf < xri->nformat; nf++)
+    for (int nf = 0; nf < xri->nformat; nf++)
 	if (xri->format[nf].id == format)
 	    return &xri->format[nf];
     return NULL;
@@ -411,7 +407,6 @@ XRenderQueryFormats (Display *dpy)
     xPictVisual			*xVisual;
     CARD32			*xSubpixel;
     void			*xData;
-    int				nf, ns, nd, nv;
     unsigned long		rlength;
     unsigned long		nbytes;
 
@@ -505,7 +500,7 @@ XRenderQueryFormats (Display *dpy)
     _XRead (dpy, (char *) xData, rlength);
     format = xri->format;
     xFormat = (xPictFormInfo *) xData;
-    for (nf = 0; nf < rep.numFormats; nf++)
+    for (int nf = 0; nf < rep.numFormats; nf++)
     {
 	format->id = xFormat->id;
 	format->type = xFormat->type;
@@ -526,7 +521,7 @@ XRenderQueryFormats (Display *dpy)
     screen = xri->screen;
     depth = xri->depth;
     visual = xri->visual;
-    for (ns = 0; ns < xri->nscreen; ns++)
+    for (int ns = 0; ns < xri->nscreen; ns++)
     {
 	screen->depths = depth;
 	screen->ndepths = xScreen->nDepth;
@@ -542,7 +537,7 @@ XRenderQueryFormats (Display *dpy)
 	    return 0;
 	}
 	rep.numDepths -= screen->ndepths;
-	for (nd = 0; nd < screen->ndepths; nd++)
+	for (int nd = 0; nd < screen->ndepths; nd++)
 	{
 	    depth->depth = xDepth->depth;
 	    depth->nvisuals = xDepth->nPictVisuals;
@@ -557,7 +552,7 @@ XRenderQueryFormats (Display *dpy)
 		return 0;
 	    }
 	    rep.numVisuals -= depth->nvisuals;
-	    for (nv = 0; nv < depth->nvisuals; nv++)
+	    for (int nv = 0; nv < depth->nvisuals; nv++)
 	    {
 		visual->visual = _XRenderFindVisual (dpy, xVisual->visual);
 		visual->format = _XRenderFindFormat (xri, xVisual->format);
@@ -572,7 +567,7 @@ XRenderQueryFormats (Display *dpy)
     }
     xSubpixel = (CARD32 *) xScreen;
     screen = xri->screen;
-    for (ns = 0; ns < rep.numSubpixel; ns++)
+    for (int ns = 0; ns < rep.numSubpixel; ns++)
     {
 	screen->subpixel = *xSubpixel;
 	xSubpixel++;
@@ -649,14 +644,13 @@ XRenderFindFormat (Display		*dpy,
 		   int			count)
 {
     XRenderExtDisplayInfo *info = XRenderFindDisplay (dpy);
-    int		    nf;
     XRenderInfo     *xri;
 
     RenderCheckExtension (dpy, info, NULL);
     if (!XRenderQueryFormats (dpy))
 	return NULL;
     xri = info->info;
-    for (nf = 0; nf < xri->nformat; nf++)
+    for (int nf = 0; nf < xri->nformat; nf++)
     {
 	if (mask & PictFormatID)
 	    if (template->id != xri->format[nf].id)
@@ -862,7 +856,7 @@ XRenderQueryPictIndexValues(Display			*dpy,
     xRenderQueryPictIndexValuesReq	*req;
     xRenderQueryPictIndexValuesReply	rep;
     XIndexValue				*values;
-    unsigned int			nbytes, nread, rlength, i;
+    unsigned int			nbytes, nread, rlength;
 
     RenderCheckExtension (dpy, info, NULL);
 
@@ -904,7 +898,7 @@ XRenderQueryPictIndexValues(Display			*dpy,
 
     /* read the values one at a time and convert */
     *num = rep.numIndexValues;
-    for(i = 0; i < rep.numIndexValues; i++)
+    for (unsigned int i = 0; i < rep.numIndexValues; i++)
     {
 	xIndexValue value;
 

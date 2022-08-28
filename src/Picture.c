@@ -172,15 +172,17 @@ XRenderSetPictureClipRegion (Display	    *dpy,
 			     Region	    r)
 {
     XRenderExtDisplayInfo *info = XRenderFindDisplay (dpy);
-    int		    i;
-    XRectangle	    *xr, *pr;
-    BOX		    *pb;
+    XRectangle	    *xr;
     unsigned long   total;
 
     RenderSimpleCheckExtension (dpy, info);
     LockDisplay(dpy);
     total = r->numRects * sizeof (XRectangle);
     if ((xr = (XRectangle *) _XAllocTemp(dpy, total))) {
+	int		i;
+	XRectangle	*pr;
+	BOX		*pb;
+
 	for (pr = xr, pb = r->rects, i = r->numRects; --i >= 0; pr++, pb++) {
 	    pr->x = pb->x1;
 	    pr->y = pb->y1;

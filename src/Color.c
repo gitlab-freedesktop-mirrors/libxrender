@@ -34,18 +34,19 @@ XRenderParseColor(Display *dpy, char *spec, XRenderColor *def)
     {
 	unsigned short	elements[4];
 	unsigned short	*pShort;
-	int		i, n;
-	char		c;
 
 	spec += 5;
 	/*
 	 * Attempt to parse the value portion.
 	 */
 	pShort = elements;
-	for (i = 0; i < 4; i++, pShort++, spec++) {
-	    n = 0;
+	for (int i = 0; i < 4; i++, pShort++, spec++) {
+	    int n = 0;
+
 	    *pShort = 0;
 	    while (*spec != '/' && *spec != '\0') {
+		char	c;
+
 		if (++n > 4) {
 		    return 0;
 		}

@@ -245,8 +245,8 @@ XRenderCompositeDoublePoly (Display		    *dpy,
 {
     Edge	    *edges;
     XTrapezoid	    *traps;
-    int		    i, nedges, ntraps;
-    XFixed	    x, y, prevx = 0, prevy = 0, firstx = 0, firsty = 0;
+    int		    nedges, ntraps;
+    XFixed	    prevx = 0, prevy = 0, firstx = 0, firsty = 0;
     XFixed	    top = 0, bottom = 0;	/* GCCism */
 
     edges = Xmalloc ((npoints * sizeof (Edge)) +
@@ -255,8 +255,10 @@ XRenderCompositeDoublePoly (Display		    *dpy,
 	return;
     traps = (XTrapezoid *) (edges + npoints);
     nedges = 0;
-    for (i = 0; i <= npoints; i++)
+    for (int i = 0; i <= npoints; i++)
     {
+	XFixed	x, y;
+
 	if (i == npoints)
 	{
 	    x = firstx;

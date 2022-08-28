@@ -394,15 +394,10 @@ XRenderCompositeText8 (Display			    *dpy,
 		       _Xconst XGlyphElt8	    *elts,
 		       int			    nelt)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     xRenderCompositeGlyphs8Req	*req;
     GlyphSet			glyphset;
     long			len;
-    long			elen;
-    xGlyphElt			*elt;
-    int				i;
-    _Xconst char		*chars;
-    int				nchars;
 
     if (!nelt)
 	return;
@@ -429,8 +424,11 @@ XRenderCompositeText8 (Display			    *dpy,
 #define MAX_8 252
 
     glyphset = elts[0].glyphset;
-    for (i = 0; i < nelt; i++)
+    for (int i = 0; i < nelt; i++)
     {
+	long	elen;
+	int	nchars;
+
 	/*
 	 * Check for glyphset change
 	 */
@@ -455,8 +453,12 @@ XRenderCompositeText8 (Display			    *dpy,
      * Send the glyphs
      */
     glyphset = elts[0].glyphset;
-    for (i = 0; i < nelt; i++)
+    for (int i = 0; i < nelt; i++)
     {
+	xGlyphElt	*elt;
+	_Xconst char	*chars;
+	int		nchars;
+
 	/*
 	 * Switch glyphsets
 	 */
@@ -511,11 +513,6 @@ XRenderCompositeText16 (Display			    *dpy,
     xRenderCompositeGlyphs16Req	*req;
     GlyphSet			glyphset;
     long			len;
-    long			elen;
-    xGlyphElt			*elt;
-    int				i;
-    _Xconst unsigned short    	*chars;
-    int				nchars;
 
     if (!nelt)
 	return;
@@ -542,8 +539,11 @@ XRenderCompositeText16 (Display			    *dpy,
 #define MAX_16	254
 
     glyphset = elts[0].glyphset;
-    for (i = 0; i < nelt; i++)
+    for (int i = 0; i < nelt; i++)
     {
+	int	nchars;
+	long	elen;
+
 	/*
 	 * Check for glyphset change
 	 */
@@ -565,8 +565,12 @@ XRenderCompositeText16 (Display			    *dpy,
     req->length += len;
 
     glyphset = elts[0].glyphset;
-    for (i = 0; i < nelt; i++)
+    for (int i = 0; i < nelt; i++)
     {
+	xGlyphElt		*elt;
+	_Xconst unsigned short	*chars;
+	int			nchars;
+
 	/*
 	 * Switch glyphsets
 	 */
@@ -622,11 +626,6 @@ XRenderCompositeText32 (Display			    *dpy,
     xRenderCompositeGlyphs32Req	*req;
     GlyphSet			glyphset;
     long			len;
-    long			elen;
-    xGlyphElt			*elt;
-    int				i;
-    _Xconst unsigned int    	*chars;
-    int				nchars;
 
     if (!nelt)
 	return;
@@ -654,8 +653,11 @@ XRenderCompositeText32 (Display			    *dpy,
 #define MAX_32	254
 
     glyphset = elts[0].glyphset;
-    for (i = 0; i < nelt; i++)
+    for (int i = 0; i < nelt; i++)
     {
+	int	nchars;
+	long	elen;
+
 	/*
 	 * Check for glyphset change
 	 */
@@ -672,8 +674,12 @@ XRenderCompositeText32 (Display			    *dpy,
     req->length += len;
 
     glyphset = elts[0].glyphset;
-    for (i = 0; i < nelt; i++)
+    for (int i = 0; i < nelt; i++)
     {
+	xGlyphElt		*elt;
+	_Xconst unsigned int	*chars;
+	int			nchars;
+
 	/*
 	 * Switch glyphsets
 	 */

@@ -36,15 +36,16 @@ XRenderAddTraps (Display	    *dpy,
 		 int		    ntrap)
 {
     XRenderExtDisplayInfo   *info = XRenderFindDisplay (dpy);
-    xRenderAddTrapsReq	    *req;
-    int			    n;
-    long    		    len;
     unsigned long	    max_req = dpy->bigreq_size ? dpy->bigreq_size : dpy->max_request_size;
 
     RenderSimpleCheckExtension (dpy, info);
     LockDisplay(dpy);
     while (ntrap)
     {
+	xRenderAddTrapsReq	*req;
+	int			n;
+	long			len;
+
 	GetReq(RenderAddTraps, req);
 	req->reqType = info->codes->major_opcode;
 	req->renderReqType = X_RenderAddTraps;

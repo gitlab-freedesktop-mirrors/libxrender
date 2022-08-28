@@ -37,16 +37,17 @@ XRenderCompositeTrapezoids (Display		*dpy,
 			    _Xconst XTrapezoid	*traps,
 			    int			ntrap)
 {
-    XRenderExtDisplayInfo         *info = XRenderFindDisplay (dpy);
-    xRenderTrapezoidsReq    *req;
-    int			    n;
-    long    		    len;
+    XRenderExtDisplayInfo   *info = XRenderFindDisplay (dpy);
     unsigned long	    max_req = dpy->bigreq_size ? dpy->bigreq_size : dpy->max_request_size;
 
     RenderSimpleCheckExtension (dpy, info);
     LockDisplay(dpy);
     while (ntrap)
     {
+	xRenderTrapezoidsReq	*req;
+	int			n;
+	long			len;
+
 	GetReq(RenderTrapezoids, req);
 	req->reqType = info->codes->major_opcode;
 	req->renderReqType = X_RenderTrapezoids;

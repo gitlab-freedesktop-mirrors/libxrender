@@ -37,15 +37,16 @@ XRenderCompositeTriangles (Display		*dpy,
 			   _Xconst XTriangle	*triangles,
 			   int			ntriangle)
 {
-    XRenderExtDisplayInfo         *info = XRenderFindDisplay (dpy);
-    xRenderTrianglesReq	    *req;
-    int			    n;
-    long    		    len;
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
 
     RenderSimpleCheckExtension (dpy, info);
     LockDisplay(dpy);
     while (ntriangle)
     {
+	xRenderTrianglesReq	*req;
+	int			n;
+	long			len;
+
 	GetReq(RenderTriangles, req);
 	req->reqType = info->codes->major_opcode;
 	req->renderReqType = X_RenderTriangles;
@@ -82,15 +83,16 @@ XRenderCompositeTriStrip (Display		*dpy,
 			  _Xconst XPointFixed	*points,
 			  int			npoint)
 {
-    XRenderExtDisplayInfo         *info = XRenderFindDisplay (dpy);
-    xRenderTriStripReq	    *req;
-    int			    n;
-    long    		    len;
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
 
     RenderSimpleCheckExtension (dpy, info);
     LockDisplay(dpy);
     while (npoint > 2)
     {
+	xRenderTriStripReq	*req;
+	int			n;
+	long			len;
+
 	GetReq(RenderTriStrip, req);
 	req->reqType = info->codes->major_opcode;
 	req->renderReqType = X_RenderTriStrip;
@@ -127,12 +129,8 @@ XRenderCompositeTriFan (Display			*dpy,
 			_Xconst XPointFixed	*points,
 			int			npoint)
 {
-    XRenderExtDisplayInfo         *info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo   *info = XRenderFindDisplay (dpy);
     _Xconst XPointFixed	    *first = points;
-    xPointFixed		    *p;
-    xRenderTriFanReq	    *req;
-    int			    n;
-    long    		    len;
 
     RenderSimpleCheckExtension (dpy, info);
     LockDisplay(dpy);
@@ -140,6 +138,11 @@ XRenderCompositeTriFan (Display			*dpy,
     npoint--;
     while (npoint > 1)
     {
+	xRenderTriFanReq	*req;
+	xPointFixed		*p;
+	int			n;
+	long			len;
+
 	GetReqExtra(RenderTriFan, SIZEOF (xPointFixed), req);
 	req->reqType = info->codes->major_opcode;
 	req->renderReqType = X_RenderTriFan;
