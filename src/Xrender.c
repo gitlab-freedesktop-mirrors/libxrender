@@ -403,7 +403,7 @@ XRenderQueryFormats (Display *dpy)
     XRenderVisual		*visual;
     xPictFormInfo		*xFormat;
     xPictScreen			*xScreen;
-    xPictDepth			*xDepth;
+    xPictDepth			*xPDepth;
     xPictVisual			*xVisual;
     CARD32			*xSubpixel;
     void			*xData;
@@ -527,7 +527,7 @@ XRenderQueryFormats (Display *dpy)
 	screen->ndepths = xScreen->nDepth;
 	screen->fallback = _XRenderFindFormat (xri, xScreen->fallback);
 	screen->subpixel = SubPixelUnknown;
-	xDepth = (xPictDepth *) (xScreen + 1);
+	xPDepth = (xPictDepth *) (xScreen + 1);
 	if (screen->ndepths > rep.numDepths) {
 	    Xfree (xri);
 	    Xfree (xData);
@@ -539,10 +539,10 @@ XRenderQueryFormats (Display *dpy)
 	rep.numDepths -= screen->ndepths;
 	for (int nd = 0; nd < screen->ndepths; nd++)
 	{
-	    depth->depth = xDepth->depth;
-	    depth->nvisuals = xDepth->nPictVisuals;
+	    depth->depth = xPDepth->depth;
+	    depth->nvisuals = xPDepth->nPictVisuals;
 	    depth->visuals = visual;
-	    xVisual = (xPictVisual *) (xDepth + 1);
+	    xVisual = (xPictVisual *) (xPDepth + 1);
 	    if (depth->nvisuals > rep.numVisuals) {
 		Xfree (xri);
 		Xfree (xData);
@@ -560,10 +560,10 @@ XRenderQueryFormats (Display *dpy)
 		xVisual++;
 	    }
 	    depth++;
-	    xDepth = (xPictDepth *) xVisual;
+	    xPDepth = (xPictDepth *) xVisual;
 	}
 	screen++;
-	xScreen = (xPictScreen *) xDepth;
+	xScreen = (xPictScreen *) xPDepth;
     }
     xSubpixel = (CARD32 *) xScreen;
     screen = xri->screen;
