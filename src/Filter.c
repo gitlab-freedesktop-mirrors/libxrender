@@ -37,7 +37,7 @@ XRenderQueryFilters (Display *dpy, Drawable drawable)
     XFilters			*filters;
     char			*name;
     char			len;
-    int				i;
+    unsigned int		i;
     unsigned long		nbytes, nbytesAlias, nbytesName, reply_left;
 
     if (!RenderHasExtension (info))

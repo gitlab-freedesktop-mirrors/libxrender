@@ -44,7 +44,7 @@ XRenderAddTraps (Display	    *dpy,
     {
 	xRenderAddTrapsReq	*req;
 	int			n;
-	long			len;
+	unsigned long		len;
 
 	GetReq(RenderAddTraps, req);
 	req->reqType = info->codes->major_opcode;
@@ -53,10 +53,10 @@ XRenderAddTraps (Display	    *dpy,
 	req->xOff = xOff;
 	req->yOff = yOff;
 	n = ntrap;
-	len = ((long) n) * (SIZEOF (xTrap) >> 2);
+	len = ((unsigned long) n) * (SIZEOF (xTrap) >> 2);
 	if (len > (max_req - req->length)) {
 	    n = (max_req - req->length) / (SIZEOF (xTrap) >> 2);
-	    len = ((long)n) * (SIZEOF (xTrap) >> 2);
+	    len = ((unsigned long) n) * (SIZEOF (xTrap) >> 2);
 	}
 	SetReqLen (req, len, len);
 	len <<= 2;

@@ -46,7 +46,7 @@ XRenderCompositeTrapezoids (Display		*dpy,
     {
 	xRenderTrapezoidsReq	*req;
 	int			n;
-	long			len;
+	unsigned long		len;
 
 	GetReq(RenderTrapezoids, req);
 	req->reqType = info->codes->major_opcode;
@@ -58,10 +58,10 @@ XRenderCompositeTrapezoids (Display		*dpy,
 	req->xSrc = xSrc;
 	req->ySrc = ySrc;
 	n = ntrap;
-	len = ((long) n) * (SIZEOF (xTrapezoid) >> 2);
+	len = ((unsigned long) n) * (SIZEOF (xTrapezoid) >> 2);
 	if (len > (max_req - req->length)) {
 	    n = (max_req - req->length) / (SIZEOF (xTrapezoid) >> 2);
-	    len = ((long)n) * (SIZEOF (xTrapezoid) >> 2);
+	    len = ((unsigned long) n) * (SIZEOF (xTrapezoid) >> 2);
 	}
 	SetReqLen (req, len, len);
 	len <<= 2;

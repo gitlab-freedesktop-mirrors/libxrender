@@ -500,7 +500,7 @@ XRenderQueryFormats (Display *dpy)
     _XRead (dpy, (char *) xData, rlength);
     format = xri->format;
     xFormat = (xPictFormInfo *) xData;
-    for (int nf = 0; nf < rep.numFormats; nf++)
+    for (unsigned int nf = 0; nf < rep.numFormats; nf++)
     {
 	format->id = xFormat->id;
 	format->type = xFormat->type;
@@ -567,7 +567,7 @@ XRenderQueryFormats (Display *dpy)
     }
     xSubpixel = (CARD32 *) xScreen;
     screen = xri->screen;
-    for (int ns = 0; ns < rep.numSubpixel; ns++)
+    for (unsigned int ns = 0; ns < rep.numSubpixel; ns++)
     {
 	screen->subpixel = *xSubpixel;
 	xSubpixel++;
