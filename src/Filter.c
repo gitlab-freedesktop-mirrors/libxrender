@@ -38,7 +38,7 @@ XRenderQueryFilters (Display *dpy, Drawable drawable)
     char			*name;
     char			len;
     unsigned int		i;
-    unsigned long		nbytes, nbytesAlias, nbytesName, reply_left;
+    unsigned long		nbytesName, reply_left;
 
     if (!RenderHasExtension (info))
 	return NULL;
@@ -69,6 +69,8 @@ XRenderQueryFilters (Display *dpy, Drawable drawable)
     if ((rep.length < (INT_MAX >> 2)) &&
 	(rep.numFilters < ((INT_MAX / 4) / sizeof (char *))) &&
 	(rep.numAliases < ((INT_MAX / 4) / sizeof (short)))) {
+	unsigned long		nbytes, nbytesAlias;
+
 	/*
 	 * Compute total number of bytes for filter names
 	 */
