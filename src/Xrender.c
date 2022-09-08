@@ -868,7 +868,7 @@ XRenderQueryPictIndexValues(Display			*dpy,
     xRenderQueryPictIndexValuesReq	*req;
     xRenderQueryPictIndexValuesReply	rep;
     XIndexValue				*values;
-    unsigned int			nbytes, nread, rlength, i;
+    unsigned int			nbytes, nread, i;
 
     RenderCheckExtension (dpy, info, NULL);
 
@@ -886,6 +886,7 @@ XRenderQueryPictIndexValues(Display			*dpy,
 
     if ((rep.length < (INT_MAX >> 2)) &&
 	(rep.numIndexValues < (INT_MAX / sizeof (XIndexValue)))) {
+	unsigned int rlength;
 	/* request data length */
 	nbytes = rep.length << 2;
 	/* bytes of actual data in the request */
@@ -896,7 +897,7 @@ XRenderQueryPictIndexValues(Display			*dpy,
 	/* allocate returned data */
 	values = Xmalloc (rlength);
     } else {
-	nbytes = nread = rlength = 0;
+	nbytes = nread = 0;
 	values = NULL;
     }
 
