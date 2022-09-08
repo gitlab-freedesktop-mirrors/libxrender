@@ -245,7 +245,7 @@ XRenderCompositeDoublePoly (Display		    *dpy,
 {
     Edge	    *edges;
     XTrapezoid	    *traps;
-    int		    nedges, ntraps;
+    int		    i, nedges, ntraps;
     XFixed	    prevx = 0, prevy = 0, firstx = 0, firsty = 0;
     XFixed	    top = 0, bottom = 0;	/* GCCism */
 
@@ -255,7 +255,7 @@ XRenderCompositeDoublePoly (Display		    *dpy,
 	return;
     traps = (XTrapezoid *) (edges + npoints);
     nedges = 0;
-    for (int i = 0; i <= npoints; i++)
+    for (i = 0; i <= npoints; i++)
     {
 	XFixed	x, y;
 

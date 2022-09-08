@@ -30,7 +30,7 @@
 GlyphSet
 XRenderCreateGlyphSet (Display *dpy, _Xconst XRenderPictFormat *format)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     GlyphSet			gsid;
     xRenderCreateGlyphSetReq	*req;
 
@@ -398,6 +398,7 @@ XRenderCompositeText8 (Display			    *dpy,
     xRenderCompositeGlyphs8Req	*req;
     GlyphSet			glyphset;
     long			len;
+    int				i;
 
     if (!nelt)
 	return;
@@ -424,7 +425,7 @@ XRenderCompositeText8 (Display			    *dpy,
 #define MAX_8 252
 
     glyphset = elts[0].glyphset;
-    for (int i = 0; i < nelt; i++)
+    for (i = 0; i < nelt; i++)
     {
 	long	elen;
 	int	nchars;
@@ -453,7 +454,7 @@ XRenderCompositeText8 (Display			    *dpy,
      * Send the glyphs
      */
     glyphset = elts[0].glyphset;
-    for (int i = 0; i < nelt; i++)
+    for (i = 0; i < nelt; i++)
     {
 	xGlyphElt	*elt;
 	_Xconst char	*chars;
@@ -513,6 +514,7 @@ XRenderCompositeText16 (Display			    *dpy,
     xRenderCompositeGlyphs16Req	*req;
     GlyphSet			glyphset;
     long			len;
+    int				i;
 
     if (!nelt)
 	return;
@@ -539,7 +541,7 @@ XRenderCompositeText16 (Display			    *dpy,
 #define MAX_16	254
 
     glyphset = elts[0].glyphset;
-    for (int i = 0; i < nelt; i++)
+    for (i = 0; i < nelt; i++)
     {
 	int	nchars;
 	long	elen;
@@ -565,7 +567,7 @@ XRenderCompositeText16 (Display			    *dpy,
     req->length += len;
 
     glyphset = elts[0].glyphset;
-    for (int i = 0; i < nelt; i++)
+    for (i = 0; i < nelt; i++)
     {
 	xGlyphElt		*elt;
 	_Xconst unsigned short	*chars;
@@ -626,6 +628,7 @@ XRenderCompositeText32 (Display			    *dpy,
     xRenderCompositeGlyphs32Req	*req;
     GlyphSet			glyphset;
     long			len;
+    int				i;
 
     if (!nelt)
 	return;
@@ -653,7 +656,7 @@ XRenderCompositeText32 (Display			    *dpy,
 #define MAX_32	254
 
     glyphset = elts[0].glyphset;
-    for (int i = 0; i < nelt; i++)
+    for (i = 0; i < nelt; i++)
     {
 	int	nchars;
 	long	elen;
@@ -674,7 +677,7 @@ XRenderCompositeText32 (Display			    *dpy,
     req->length += len;
 
     glyphset = elts[0].glyphset;
-    for (int i = 0; i < nelt; i++)
+    for (i = 0; i < nelt; i++)
     {
 	xGlyphElt		*elt;
 	_Xconst unsigned int	*chars;

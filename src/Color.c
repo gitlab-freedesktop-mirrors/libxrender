@@ -34,13 +34,14 @@ XRenderParseColor(Display *dpy, char *spec, XRenderColor *def)
     {
 	unsigned short	elements[4];
 	unsigned short	*pShort;
+	int		i;
 
 	spec += 5;
 	/*
 	 * Attempt to parse the value portion.
 	 */
 	pShort = elements;
-	for (int i = 0; i < 4; i++, pShort++, spec++) {
+	for (i = 0; i < 4; i++, pShort++, spec++) {
 	    int n = 0;
 
 	    *pShort = 0;
