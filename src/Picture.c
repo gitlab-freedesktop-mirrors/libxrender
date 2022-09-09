@@ -39,33 +39,33 @@ _XRenderProcessPictureAttributes (Display		    *dpy,
     unsigned int nvalues;
 
     if (valuemask & CPRepeat)
-	*value++ = attributes->repeat;
+	*value++ = (unsigned long) attributes->repeat;
     if (valuemask & CPAlphaMap)
 	*value++ = attributes->alpha_map;
     if (valuemask & CPAlphaXOrigin)
-	*value++ = attributes->alpha_x_origin;
+	*value++ = (unsigned long) attributes->alpha_x_origin;
     if (valuemask & CPAlphaYOrigin)
-	*value++ = attributes->alpha_y_origin;
+	*value++ = (unsigned long) attributes->alpha_y_origin;
     if (valuemask & CPClipXOrigin)
-	*value++ = attributes->clip_x_origin;
+	*value++ = (unsigned long) attributes->clip_x_origin;
     if (valuemask & CPClipYOrigin)
-	*value++ = attributes->clip_y_origin;
+	*value++ = (unsigned long) attributes->clip_y_origin;
     if (valuemask & CPClipMask)
 	*value++ = attributes->clip_mask;
     if (valuemask & CPGraphicsExposure)
-	*value++ = attributes->graphics_exposures;
+	*value++ = (unsigned long) attributes->graphics_exposures;
     if (valuemask & CPSubwindowMode)
-	*value++ = attributes->subwindow_mode;
+	*value++ = (unsigned long) attributes->subwindow_mode;
     if (valuemask & CPPolyEdge)
-	*value++ = attributes->poly_edge;
+	*value++ = (unsigned long) attributes->poly_edge;
     if (valuemask & CPPolyMode)
-	*value++ = attributes->poly_mode;
+	*value++ = (unsigned long) attributes->poly_mode;
     if (valuemask & CPDither)
 	*value++ = attributes->dither;
     if (valuemask & CPComponentAlpha)
-	*value++ = attributes->component_alpha;
+	*value++ = (unsigned long) attributes->component_alpha;
 
-    req->length += (nvalues = value - values);
+    req->length += (nvalues = (unsigned) (value - values));
 
     nvalues <<= 2;			    /* watch out for macros... */
     Data32 (dpy, (long *) values, (long)nvalues);
@@ -85,12 +85,12 @@ XRenderCreatePicture (Display			*dpy,
     RenderCheckExtension (dpy, info, 0);
     LockDisplay(dpy);
     GetReq(RenderCreatePicture, req);
-    req->reqType = info->codes->major_opcode;
+    req->reqType = (CARD8) info->codes->major_opcode;
     req->renderReqType = X_RenderCreatePicture;
-    req->pid = pid = XAllocID(dpy);
-    req->drawable = drawable;
-    req->format = format->id;
-    if ((req->mask = valuemask))
+    req->pid = (CARD32) (pid = XAllocID(dpy));
+    req->drawable = (CARD32) drawable;
+    req->format = (CARD32) format->id;
+    if ((req->mask = (CARD32) valuemask))
 	_XRenderProcessPictureAttributes (dpy,
 					  (xRenderChangePictureReq *) req,
 					  valuemask,
@@ -112,10 +112,10 @@ XRenderChangePicture (Display                   *dpy,
     RenderSimpleCheckExtension (dpy, info);
     LockDisplay(dpy);
     GetReq(RenderChangePicture, req);
-    req->reqType = info->codes->major_opcode;
+    req->reqType = (CARD8) info->codes->major_opcode;
     req->renderReqType = X_RenderChangePicture;
-    req->picture = picture;
-    req->mask = valuemask;
+    req->picture = (CARD32) picture;
+    req->mask = (CARD32) valuemask;
     _XRenderProcessPictureAttributes (dpy,
 				      req,
 				      valuemask,
@@ -137,11 +137,11 @@ _XRenderSetPictureClipRectangles (Display	    *dpy,
     long				len;
 
     GetReq (RenderSetPictureClipRectangles, req);
-    req->reqType = info->codes->major_opcode;
+    req->reqType = (CARD8) info->codes->major_opcode;
     req->renderReqType = X_RenderSetPictureClipRectangles;
-    req->picture = picture;
-    req->xOrigin = xOrigin;
-    req->yOrigin = yOrigin;
+    req->picture = (CARD32) picture;
+    req->xOrigin = (INT16) xOrigin;
+    req->yOrigin = (INT16) yOrigin;
     len = ((long) n) << 1;
     SetReqLen (req, len, 1);
     len <<= 2;
@@ -177,22 +177,22 @@ XRenderSetPictureClipRegion (Display	    *dpy,
 
     RenderSimpleCheckExtension (dpy, info);
     LockDisplay(dpy);
-    total = r->numRects * sizeof (XRectangle);
+    total = (unsigned long) ((size_t) r->numRects * sizeof (XRectangle));
     if ((xr = (XRectangle *) _XAllocTemp(dpy, total))) {
 	int		i;
 	XRectangle	*pr;
 	BOX		*pb;
 
-	for (pr = xr, pb = r->rects, i = r->numRects; --i >= 0; pr++, pb++) {
+	for (pr = xr, pb = r->rects, i = (int) r->numRects; --i >= 0; pr++, pb++) {
 	    pr->x = pb->x1;
 	    pr->y = pb->y1;
-	    pr->width = pb->x2 - pb->x1;
-	    pr->height = pb->y2 - pb->y1;
+	    pr->width = (unsigned short) (pb->x2 - pb->x1);
+	    pr->height = (unsigned short) (pb->y2 - pb->y1);
 	}
     }
     if (xr || !r->numRects)
 	_XRenderSetPictureClipRectangles (dpy, info, picture, 0, 0,
-					  xr, r->numRects);
+					  xr, (int) r->numRects);
     if (xr)
 	_XFreeTemp(dpy, (char *)xr, total);
     UnlockDisplay(dpy);
@@ -210,9 +210,9 @@ XRenderSetPictureTransform (Display	*dpy,
     RenderSimpleCheckExtension (dpy, info);
     LockDisplay (dpy);
     GetReq(RenderSetPictureTransform, req);
-    req->reqType = info->codes->major_opcode;
+    req->reqType = (CARD8) info->codes->major_opcode;
     req->renderReqType = X_RenderSetPictureTransform;
-    req->picture = picture;
+    req->picture = (CARD32) picture;
     req->transform.matrix11 = transform->matrix[0][0];
     req->transform.matrix12 = transform->matrix[0][1];
     req->transform.matrix13 = transform->matrix[0][2];
@@ -237,9 +237,9 @@ XRenderFreePicture (Display                   *dpy,
     RenderSimpleCheckExtension (dpy, info);
     LockDisplay(dpy);
     GetReq(RenderFreePicture, req);
-    req->reqType = info->codes->major_opcode;
+    req->reqType = (CARD8) info->codes->major_opcode;
     req->renderReqType = X_RenderFreePicture;
-    req->picture = picture;
+    req->picture = (CARD32) picture;
     UnlockDisplay(dpy);
     SyncHandle();
 }
@@ -255,10 +255,10 @@ Picture XRenderCreateSolidFill(Display *dpy,
     RenderCheckExtension (dpy, info, 0);
     LockDisplay(dpy);
     GetReq(RenderCreateSolidFill, req);
-    req->reqType = info->codes->major_opcode;
+    req->reqType = (CARD8) info->codes->major_opcode;
     req->renderReqType = X_RenderCreateSolidFill;
 
-    req->pid = pid = XAllocID(dpy);
+    req->pid = (CARD32) (pid = XAllocID(dpy));
     req->color.red = color->red;
     req->color.green = color->green;
     req->color.blue = color->blue;
@@ -284,16 +284,16 @@ Picture XRenderCreateLinearGradient(Display *dpy,
     RenderCheckExtension (dpy, info, 0);
     LockDisplay(dpy);
     GetReq(RenderCreateLinearGradient, req);
-    req->reqType = info->codes->major_opcode;
+    req->reqType = (CARD8) info->codes->major_opcode;
     req->renderReqType = X_RenderCreateLinearGradient;
 
-    req->pid = pid = XAllocID(dpy);
+    req->pid = (CARD32) (pid = XAllocID(dpy));
     req->p1.x = gradient->p1.x;
     req->p1.y = gradient->p1.y;
     req->p2.x = gradient->p2.x;
     req->p2.y = gradient->p2.y;
 
-    req->nStops = nStops;
+    req->nStops = (CARD32) nStops;
     len = (long) nStops * 3;
     SetReqLen (req, len, 6);
     DataInt32(dpy, stops, nStops * 4);
@@ -318,10 +318,10 @@ Picture XRenderCreateRadialGradient(Display *dpy,
     RenderCheckExtension (dpy, info, 0);
     LockDisplay(dpy);
     GetReq(RenderCreateRadialGradient, req);
-    req->reqType = info->codes->major_opcode;
+    req->reqType = (CARD8) info->codes->major_opcode;
     req->renderReqType = X_RenderCreateRadialGradient;
 
-    req->pid = pid = XAllocID(dpy);
+    req->pid = (CARD32) (pid = XAllocID(dpy));
     req->inner.x = gradient->inner.x;
     req->inner.y = gradient->inner.y;
     req->outer.x = gradient->outer.x;
@@ -329,7 +329,7 @@ Picture XRenderCreateRadialGradient(Display *dpy,
     req->inner_radius = gradient->inner.radius;
     req->outer_radius = gradient->outer.radius;
 
-    req->nStops = nStops;
+    req->nStops = (CARD32) nStops;
     len = (long) nStops * 3;
     SetReqLen (req, len, 6);
     DataInt32(dpy, stops, nStops * 4);
@@ -354,15 +354,15 @@ Picture XRenderCreateConicalGradient(Display *dpy,
     RenderCheckExtension (dpy, info, 0);
     LockDisplay(dpy);
     GetReq(RenderCreateConicalGradient, req);
-    req->reqType = info->codes->major_opcode;
+    req->reqType = (CARD8) info->codes->major_opcode;
     req->renderReqType = X_RenderCreateConicalGradient;
 
-    req->pid = pid = XAllocID(dpy);
+    req->pid = (CARD32) (pid = XAllocID(dpy));
     req->center.x = gradient->center.x;
     req->center.y = gradient->center.y;
     req->angle = gradient->angle;
 
-    req->nStops = nStops;
+    req->nStops = (CARD32) nStops;
     len = (long) nStops * 3;
     SetReqLen (req, len, 6);
     DataInt32(dpy, stops, nStops * 4);

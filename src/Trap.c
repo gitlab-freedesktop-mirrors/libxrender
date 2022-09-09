@@ -49,18 +49,18 @@ XRenderCompositeTrapezoids (Display		*dpy,
 	unsigned long		len;
 
 	GetReq(RenderTrapezoids, req);
-	req->reqType = info->codes->major_opcode;
+	req->reqType = (CARD8) info->codes->major_opcode;
 	req->renderReqType = X_RenderTrapezoids;
 	req->op = (CARD8) op;
-	req->src = src;
-	req->dst = dst;
-	req->maskFormat = maskFormat ? maskFormat->id : 0;
-	req->xSrc = xSrc;
-	req->ySrc = ySrc;
+	req->src = (CARD32) src;
+	req->dst = (CARD32) dst;
+	req->maskFormat = (CARD32) (maskFormat ? maskFormat->id : 0);
+	req->xSrc = (INT16) xSrc;
+	req->ySrc = (INT16) ySrc;
 	n = ntrap;
 	len = ((unsigned long) n) * (SIZEOF (xTrapezoid) >> 2);
 	if (len > (max_req - req->length)) {
-	    n = (max_req - req->length) / (SIZEOF (xTrapezoid) >> 2);
+	    n = (int) ((max_req - req->length) / (SIZEOF (xTrapezoid) >> 2));
 	    len = ((unsigned long) n) * (SIZEOF (xTrapezoid) >> 2);
 	}
 	SetReqLen (req, len, len);

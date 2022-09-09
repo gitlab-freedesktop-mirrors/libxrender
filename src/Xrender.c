@@ -161,7 +161,7 @@ XRenderHasDepths (Display *dpy)
 		if ((missing & DEPTH_MASK(d)) && d != 1)
 		{
 		    Pixmap  p;
-		    p = XCreatePixmap (dpy, RootWindow (dpy, s), 1, 1, d);
+		    p = XCreatePixmap (dpy, RootWindow (dpy, s), 1, 1, (unsigned) d);
 		    XFreePixmap (dpy, p);
 		}
 	    XSync (dpy, False);
@@ -389,8 +389,8 @@ _XRenderVersionHandler (Display	    *dpy,
 	_XGetAsyncReply(dpy, (char *)&replbuf, rep, buf, len,
 		     (SIZEOF(xRenderQueryVersionReply) - SIZEOF(xReply)) >> 2,
 			True);
-    state->major_version = repl->majorVersion;
-    state->minor_version = repl->minorVersion;
+    state->major_version = (int) repl->majorVersion;
+    state->minor_version = (int) repl->minorVersion;
     return True;
 }
 
@@ -427,7 +427,7 @@ XRenderQueryFormats (Display *dpy)
 	return 1;
     }
     GetReq (RenderQueryVersion, vreq);
-    vreq->reqType = info->codes->major_opcode;
+    vreq->reqType = (CARD8) info->codes->major_opcode;
     vreq->renderReqType = X_RenderQueryVersion;
     vreq->majorVersion = RENDER_MAJOR;
     vreq->minorVersion = RENDER_MINOR;
@@ -440,7 +440,7 @@ XRenderQueryFormats (Display *dpy)
     dpy->async_handlers = &async;
 
     GetReq (RenderQueryPictFormats, req);
-    req->reqType = info->codes->major_opcode;
+    req->reqType = (CARD8) info->codes->major_opcode;
     req->renderReqType = X_RenderQueryPictFormats;
 
     if (!_XReply (dpy, (xReply *) &rep, 0, xFalse))
@@ -499,14 +499,14 @@ XRenderQueryFormats (Display *dpy)
     xri->major_version = async_state.major_version;
     xri->minor_version = async_state.minor_version;
     xri->format = (XRenderPictFormat *) (xri + 1);
-    xri->nformat = rep.numFormats;
+    xri->nformat = (int) rep.numFormats;
     xri->screen = (XRenderScreen *) (xri->format + rep.numFormats);
-    xri->nscreen = rep.numScreens;
+    xri->nscreen = (int) rep.numScreens;
     xri->depth = (XRenderDepth *) (xri->screen + rep.numScreens);
-    xri->ndepth = rep.numDepths;
+    xri->ndepth = (int) rep.numDepths;
     xri->visual = (XRenderVisual *) (xri->depth + rep.numDepths);
-    xri->nvisual = rep.numVisuals;
-    _XRead (dpy, (char *) xData, rlength);
+    xri->nvisual = (int) rep.numVisuals;
+    _XRead (dpy, (char *) xData, (long) rlength);
     format = xri->format;
     xFormat = (xPictFormInfo *) xData;
     for (nf = 0; nf < rep.numFormats; nf++)
@@ -514,14 +514,14 @@ XRenderQueryFormats (Display *dpy)
 	format->id = xFormat->id;
 	format->type = xFormat->type;
 	format->depth = xFormat->depth;
-	format->direct.red = xFormat->direct.red;
-	format->direct.redMask = xFormat->direct.redMask;
-	format->direct.green = xFormat->direct.green;
-	format->direct.greenMask = xFormat->direct.greenMask;
-	format->direct.blue = xFormat->direct.blue;
-	format->direct.blueMask = xFormat->direct.blueMask;
-	format->direct.alpha = xFormat->direct.alpha;
-	format->direct.alphaMask = xFormat->direct.alphaMask;
+	format->direct.red       = (short) xFormat->direct.red;
+	format->direct.redMask   = (short) xFormat->direct.redMask;
+	format->direct.green     = (short) xFormat->direct.green;
+	format->direct.greenMask = (short) xFormat->direct.greenMask;
+	format->direct.blue      = (short) xFormat->direct.blue;
+	format->direct.blueMask  = (short) xFormat->direct.blueMask;
+	format->direct.alpha     = (short) xFormat->direct.alpha;
+	format->direct.alphaMask = (short) xFormat->direct.alphaMask;
 	format->colormap = xFormat->colormap;
 	format++;
 	xFormat++;
@@ -533,7 +533,7 @@ XRenderQueryFormats (Display *dpy)
     for (ns = 0; ns < xri->nscreen; ns++)
     {
 	screen->depths = depth;
-	screen->ndepths = xScreen->nDepth;
+	screen->ndepths = (int) xScreen->nDepth;
 	screen->fallback = _XRenderFindFormat (xri, xScreen->fallback);
 	screen->subpixel = SubPixelUnknown;
 	xPDepth = (xPictDepth *) (xScreen + 1);
@@ -545,7 +545,7 @@ XRenderQueryFormats (Display *dpy)
 	    SyncHandle ();
 	    return 0;
 	}
-	rep.numDepths -= screen->ndepths;
+	rep.numDepths -= (CARD32) screen->ndepths;
 	for (nd = 0; nd < screen->ndepths; nd++)
 	{
 	    int nv;
@@ -562,7 +562,7 @@ XRenderQueryFormats (Display *dpy)
 		SyncHandle ();
 		return 0;
 	    }
-	    rep.numVisuals -= depth->nvisuals;
+	    rep.numVisuals -= (CARD32) depth->nvisuals;
 	    for (nv = 0; nv < depth->nvisuals; nv++)
 	    {
 		visual->visual = _XRenderFindVisual (dpy, xVisual->visual);
@@ -580,7 +580,7 @@ XRenderQueryFormats (Display *dpy)
     screen = xri->screen;
     for (ns = 0; ns < rep.numSubpixel; ns++)
     {
-	screen->subpixel = *xSubpixel;
+	screen->subpixel = (int) *xSubpixel;
 	xSubpixel++;
 	screen++;
     }
@@ -874,9 +874,9 @@ XRenderQueryPictIndexValues(Display			*dpy,
 
     LockDisplay (dpy);
     GetReq (RenderQueryPictIndexValues, req);
-    req->reqType = info->codes->major_opcode;
+    req->reqType       = (CARD8) info->codes->major_opcode;
     req->renderReqType = X_RenderQueryPictIndexValues;
-    req->format = format->id;
+    req->format        = (CARD32) format->id;
     if (!_XReply (dpy, (xReply *) &rep, 0, xFalse))
     {
 	UnlockDisplay (dpy);
@@ -892,7 +892,7 @@ XRenderQueryPictIndexValues(Display			*dpy,
 	/* bytes of actual data in the request */
 	nread = rep.numIndexValues * SIZEOF (xIndexValue);
 	/* size of array returned to application */
-	rlength = rep.numIndexValues * sizeof (XIndexValue);
+	rlength = (unsigned) ((unsigned long) rep.numIndexValues * sizeof (XIndexValue));
 
 	/* allocate returned data */
 	values = Xmalloc (rlength);
@@ -910,7 +910,7 @@ XRenderQueryPictIndexValues(Display			*dpy,
     }
 
     /* read the values one at a time and convert */
-    *num = rep.numIndexValues;
+    *num = (int) rep.numIndexValues;
     for (i = 0; i < rep.numIndexValues; i++)
     {
 	xIndexValue value;

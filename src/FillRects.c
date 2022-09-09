@@ -52,10 +52,10 @@ XRenderFillRectangles (Display		    *dpy,
 
 	GetReq(RenderFillRectangles, req);
 
-	req->reqType = info->codes->major_opcode;
+	req->reqType = (CARD8) info->codes->major_opcode;
 	req->renderReqType = X_RenderFillRectangles;
-	req->op = op;
-	req->dst = dst;
+	req->op = (CARD8) op;
+	req->dst = (CARD32) dst;
 	req->color.red = color->red;
 	req->color.green = color->green;
 	req->color.blue = color->blue;
@@ -65,7 +65,7 @@ XRenderFillRectangles (Display		    *dpy,
 	len = ((long)n) << 1;
 	if (!dpy->bigreq_size && len > (dpy->max_request_size - req->length))
 	{
-	    n = (dpy->max_request_size - req->length) >> 1;
+	    n = (int) ((dpy->max_request_size - req->length) >> 1);
 	    len = ((long)n) << 1;
 	}
 	SetReqLen(req, len, len);

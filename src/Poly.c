@@ -99,7 +99,7 @@ XRenderComputeTrapezoids (Edge		*edges,
     Edge	*e, *en, *next;
     XFixed	y, next_y, intersect;
 
-    qsort (edges, nedges, sizeof (Edge), CompareEdge);
+    qsort (edges, (size_t) nedges, sizeof (Edge), CompareEdge);
 
     *ntraps = 0;
     y = edges[0].edge.p1.y;
@@ -249,8 +249,8 @@ XRenderCompositeDoublePoly (Display		    *dpy,
     XFixed	    prevx = 0, prevy = 0, firstx = 0, firsty = 0;
     XFixed	    top = 0, bottom = 0;	/* GCCism */
 
-    edges = Xmalloc ((npoints * sizeof (Edge)) +
-                     (npoints * npoints * sizeof (XTrapezoid)));
+    edges = Xmalloc (((size_t) npoints * sizeof (Edge)) +
+                     ((size_t) (npoints * npoints) * sizeof (XTrapezoid)));
     if (!edges)
 	return;
     traps = (XTrapezoid *) (edges + npoints);

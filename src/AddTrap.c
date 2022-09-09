@@ -47,20 +47,20 @@ XRenderAddTraps (Display	    *dpy,
 	unsigned long		len;
 
 	GetReq(RenderAddTraps, req);
-	req->reqType = info->codes->major_opcode;
+	req->reqType = (CARD8) info->codes->major_opcode;
 	req->renderReqType = X_RenderAddTraps;
-	req->picture = picture;
-	req->xOff = xOff;
-	req->yOff = yOff;
+	req->picture = (CARD32) picture;
+	req->xOff = (INT16) xOff;
+	req->yOff = (INT16) yOff;
 	n = ntrap;
 	len = ((unsigned long) n) * (SIZEOF (xTrap) >> 2);
 	if (len > (max_req - req->length)) {
-	    n = (max_req - req->length) / (SIZEOF (xTrap) >> 2);
+	    n = (int) ((max_req - req->length) / (SIZEOF (xTrap) >> 2));
 	    len = ((unsigned long) n) * (SIZEOF (xTrap) >> 2);
 	}
 	SetReqLen (req, len, len);
 	len <<= 2;
-	DataInt32 (dpy, (int *) traps, len);
+	DataInt32 (dpy, (int *) traps, (long) len);
 	ntrap -= n;
 	traps += n;
     }

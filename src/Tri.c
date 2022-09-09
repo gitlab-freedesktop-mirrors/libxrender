@@ -48,18 +48,18 @@ XRenderCompositeTriangles (Display		*dpy,
 	long			len;
 
 	GetReq(RenderTriangles, req);
-	req->reqType = info->codes->major_opcode;
+	req->reqType = (CARD8) info->codes->major_opcode;
 	req->renderReqType = X_RenderTriangles;
 	req->op = (CARD8) op;
-	req->src = src;
-	req->dst = dst;
-	req->maskFormat = maskFormat ? maskFormat->id : 0;
-	req->xSrc = xSrc;
-	req->ySrc = ySrc;
+	req->src = (CARD32) src;
+	req->dst = (CARD32) dst;
+	req->maskFormat = (CARD32) (maskFormat ? maskFormat->id : 0);
+	req->xSrc = (INT16) xSrc;
+	req->ySrc = (INT16) ySrc;
 	n = ntriangle;
 	len = ((long) n) * (SIZEOF (xTriangle) >> 2);
 	if (!dpy->bigreq_size && len > (dpy->max_request_size - req->length)) {
-	    n = (dpy->max_request_size - req->length) / (SIZEOF (xTriangle) >> 2);
+	    n = (int) ((dpy->max_request_size - req->length) / (SIZEOF (xTriangle) >> 2));
 	    len = ((long)n) * (SIZEOF (xTriangle) >> 2);
 	}
 	SetReqLen (req, len, len);
@@ -94,18 +94,18 @@ XRenderCompositeTriStrip (Display		*dpy,
 	long			len;
 
 	GetReq(RenderTriStrip, req);
-	req->reqType = info->codes->major_opcode;
+	req->reqType = (CARD8) info->codes->major_opcode;
 	req->renderReqType = X_RenderTriStrip;
 	req->op = (CARD8) op;
-	req->src = src;
-	req->dst = dst;
-	req->maskFormat = maskFormat ? maskFormat->id : 0;
-	req->xSrc = xSrc;
-	req->ySrc = ySrc;
+	req->src = (CARD32) src;
+	req->dst = (CARD32) dst;
+	req->maskFormat = (CARD32) (maskFormat ? maskFormat->id : 0);
+	req->xSrc = (INT16) xSrc;
+	req->ySrc = (INT16) ySrc;
 	n = npoint;
 	len = ((long) n) * (SIZEOF (xPointFixed) >> 2);
 	if (!dpy->bigreq_size && len > (dpy->max_request_size - req->length)) {
-	    n = (dpy->max_request_size - req->length) / (SIZEOF (xPointFixed) >> 2);
+	    n = (int) ((dpy->max_request_size - req->length) / (SIZEOF (xPointFixed) >> 2));
 	    len = ((long)n) * (SIZEOF (xPointFixed) >> 2);
 	}
 	SetReqLen (req, len, len);
@@ -144,21 +144,21 @@ XRenderCompositeTriFan (Display			*dpy,
 	long			len;
 
 	GetReqExtra(RenderTriFan, SIZEOF (xPointFixed), req);
-	req->reqType = info->codes->major_opcode;
+	req->reqType = (CARD8) info->codes->major_opcode;
 	req->renderReqType = X_RenderTriFan;
 	req->op = (CARD8) op;
-	req->src = src;
-	req->dst = dst;
-	req->maskFormat = maskFormat ? maskFormat->id : 0;
-	req->xSrc = xSrc;
-	req->ySrc = ySrc;
+	req->src = (CARD32) src;
+	req->dst = (CARD32) dst;
+	req->maskFormat = (CARD32) (maskFormat ? maskFormat->id : 0);
+	req->xSrc = (INT16) xSrc;
+	req->ySrc = (INT16) ySrc;
 	p = (xPointFixed *) (req + 1);
 	p->x = first->x;
 	p->y = first->y;
 	n = npoint;
 	len = ((long) n) * (SIZEOF (xPointFixed) >> 2);
 	if (!dpy->bigreq_size && len > (dpy->max_request_size - req->length)) {
-	    n = (dpy->max_request_size - req->length) / (SIZEOF (xPointFixed) >> 2);
+	    n = (int) ((dpy->max_request_size - req->length) / (SIZEOF (xPointFixed) >> 2));
 	    len = ((long)n) * (SIZEOF (xPointFixed) >> 2);
 	}
 	SetReqLen (req, len, len);
