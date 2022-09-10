@@ -60,7 +60,7 @@ XRenderAddTraps (Display	    *dpy,
 	}
 	SetReqLen (req, len, len);
 	len <<= 2;
-	DataInt32 (dpy, (int *) traps, (long) len);
+	DataInt32 (dpy, (_Xconst int *) traps, (long) len);
 	ntrap -= n;
 	traps += n;
     }

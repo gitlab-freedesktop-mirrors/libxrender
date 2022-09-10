@@ -145,7 +145,7 @@ _XRenderSetPictureClipRectangles (Display	    *dpy,
     len = ((long) n) << 1;
     SetReqLen (req, len, 1);
     len <<= 2;
-    Data16 (dpy, (short *) rects, len);
+    Data16 (dpy, (_Xconst short *) rects, len);
 }
 
 void

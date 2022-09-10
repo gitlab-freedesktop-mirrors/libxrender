@@ -70,7 +70,7 @@ XRenderFillRectangles (Display		    *dpy,
 	}
 	SetReqLen(req, len, len);
 	len <<= 2; /* watch out for macros... */
-	Data16 (dpy, (short *) rectangles, len);
+	Data16 (dpy, (_Xconst short *) rectangles, len);
 	n_rects -= n;
 	rectangles += n;
     }

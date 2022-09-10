@@ -105,8 +105,8 @@ XRenderAddGlyphs (Display	*dpy,
     req->nglyphs = (CARD32) nglyphs;
     len = (nglyphs * (SIZEOF (xGlyphInfo) + 4) + nbyte_images) >> 2;
     SetReqLen(req, len, len);
-    Data32 (dpy, (long *) gids, nglyphs * 4);
-    Data16 (dpy, (short *) glyphs, nglyphs * SIZEOF (xGlyphInfo));
+    Data32 (dpy, (_Xconst long *) gids, nglyphs * 4);
+    Data16 (dpy, (_Xconst short *) glyphs, nglyphs * SIZEOF (xGlyphInfo));
     Data (dpy, images, nbyte_images);
     UnlockDisplay(dpy);
     SyncHandle();
@@ -131,7 +131,7 @@ XRenderFreeGlyphs (Display   *dpy,
     len = nglyphs;
     SetReqLen(req, len, len);
     len <<= 2;
-    Data32 (dpy, (long *) gids, len);
+    Data32 (dpy, (_Xconst long *) gids, len);
     UnlockDisplay(dpy);
     SyncHandle();
 }
@@ -281,7 +281,7 @@ XRenderCompositeString16 (Display	    *dpy,
 	elt->deltay = (INT16) yDst;
 	xDst = 0;
 	yDst = 0;
-	memcpy ((char *) (elt + 1), (char *) string, MAX_16 * 2);
+	memcpy ((char *) (elt + 1), (_Xconst char *) string, MAX_16 * 2);
 	nchar = nchar - MAX_16;
 	string += MAX_16;
     }
@@ -293,7 +293,7 @@ XRenderCompositeString16 (Display	    *dpy,
 	elt->len = (CARD8) nchar;
 	elt->deltax = (INT16) xDst;
 	elt->deltay = (INT16) yDst;
-	memcpy ((char *) (elt + 1), (char *) string, (size_t) (nchar * 2));
+	memcpy ((char *) (elt + 1), (_Xconst char *) string, (size_t) (nchar * 2));
     }
 #undef MAX_16
 
@@ -361,7 +361,7 @@ XRenderCompositeString32 (Display	    *dpy,
 	elt->deltay = (INT16) yDst;
 	xDst = 0;
 	yDst = 0;
-	memcpy ((char *) (elt + 1), (char *) string, MAX_32 * 4);
+	memcpy ((char *) (elt + 1), (_Xconst char *) string, MAX_32 * 4);
 	nchar = nchar - MAX_32;
 	string += MAX_32;
     }
@@ -373,7 +373,7 @@ XRenderCompositeString32 (Display	    *dpy,
 	elt->len = (CARD8) nchar;
 	elt->deltax = (INT16) xDst;
 	elt->deltay = (INT16) yDst;
-	memcpy ((char *) (elt + 1), (char *) string, (size_t) (nchar * 4));
+	memcpy ((char *) (elt + 1), (_Xconst char *) string, (size_t) (nchar * 4));
     }
 #undef MAX_32
 

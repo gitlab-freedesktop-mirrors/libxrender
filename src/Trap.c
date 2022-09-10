@@ -65,7 +65,7 @@ XRenderCompositeTrapezoids (Display		*dpy,
 	}
 	SetReqLen (req, len, len);
 	len <<= 2;
-	DataInt32 (dpy, (int *) traps, len);
+	DataInt32 (dpy, (_Xconst int *) traps, len);
 	ntrap -= n;
 	traps += n;
     }

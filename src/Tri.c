@@ -64,7 +64,7 @@ XRenderCompositeTriangles (Display		*dpy,
 	}
 	SetReqLen (req, len, len);
 	len <<= 2;
-	DataInt32 (dpy, (int *) triangles, len);
+	DataInt32 (dpy, (_Xconst int *) triangles, len);
 	ntriangle -= n;
 	triangles += n;
     }
@@ -110,7 +110,7 @@ XRenderCompositeTriStrip (Display		*dpy,
 	}
 	SetReqLen (req, len, len);
 	len <<= 2;
-	DataInt32 (dpy, (int *) points, len);
+	DataInt32 (dpy, (_Xconst int *) points, len);
 	npoint -= (n - 2);
 	points += (n - 2);
     }
@@ -163,7 +163,7 @@ XRenderCompositeTriFan (Display			*dpy,
 	}
 	SetReqLen (req, len, len);
 	len <<= 2;
-	DataInt32 (dpy, (int *) points, len);
+	DataInt32 (dpy, (_Xconst int *) points, len);
 	npoint -= (n - 1);
 	points += (n - 1);
     }
