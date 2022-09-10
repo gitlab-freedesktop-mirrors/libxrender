@@ -295,7 +295,7 @@ XRenderFindDisplay (Display *dpy)
 }
 
 static int
-XRenderCloseDisplay (Display *dpy, XExtCodes *codes)
+XRenderCloseDisplay (Display *dpy, XExtCodes *codes _X_UNUSED)
 {
     XRenderExtDisplayInfo *info = XRenderFindDisplay (dpy);
     if (info && info->info) XFree (info->info);

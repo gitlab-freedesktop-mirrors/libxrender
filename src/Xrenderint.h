@@ -33,6 +33,10 @@
 #include <X11/extensions/renderproto.h>
 #include "Xrender.h"
 
+#ifndef _X_UNUSED
+#define _X_UNUSED /* nothing */
+#endif
+
 typedef struct {
     Visual		*visual;
     XRenderPictFormat	*format;

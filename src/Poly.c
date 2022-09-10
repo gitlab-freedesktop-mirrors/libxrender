@@ -89,7 +89,7 @@ XRenderComputeIntersect (XLineFixed *l1, XLineFixed *l2)
 static int
 XRenderComputeTrapezoids (Edge		*edges,
 			  int		nedges,
-			  int		winding,
+			  int		winding _X_UNUSED,
 			  XTrapezoid	*traps,
 			  int           *ntraps,
 			  int           maxtraps)
@@ -237,8 +237,8 @@ XRenderCompositeDoublePoly (Display		    *dpy,
 			    _Xconst XRenderPictFormat	*maskFormat,
 			    int			    xSrc,
 			    int			    ySrc,
-			    int			    xDst,
-			    int			    yDst,
+			    int			    xDst _X_UNUSED,
+			    int			    yDst _X_UNUSED,
 			    _Xconst XPointDouble    *fpoints,
 			    int			    npoints,
 			    int			    winding)
