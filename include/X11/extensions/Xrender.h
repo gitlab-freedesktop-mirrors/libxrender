@@ -55,21 +55,21 @@
  *   zero.
  */
 typedef struct {
-    /// Red component binary displacement.
+    /** Red component binary displacement. */
     short red;
-    /// Red component bit mask.
+    /** Red component bit mask. */
     short redMask;
-    /// Green component binary displacement.
+    /** Green component binary displacement. */
     short green;
-    /// Green component bit mask.
+    /** Green component bit mask. */
     short greenMask;
-    /// Blue component binary displacement.
+    /** Blue component binary displacement. */
     short blue;
-    /// Blue component bit mask.
+    /** Blue component bit mask. */
     short blueMask;
-    /// Alpha component binary displacement.
+    /** Alpha component binary displacement. */
     short alpha;
-    /// Alpha component bit mask.
+    /** Alpha component bit mask. */
     short alphaMask;
 } XRenderDirectFormat;
 
@@ -85,82 +85,82 @@ typedef struct {
  *   zeros.
  */
 typedef struct {
-    /// XID of this structure server instance.
+    /** XID of this structure server instance. */
     PictFormat id;
-    /// Color management type.
+    /** Color management type. */
     int type;
-    /// Pixel bit depth.
+    /** Pixel bit depth. */
     int depth;
-    /// Color component description.
+    /** Color component description. */
     XRenderDirectFormat direct;
-    /// XID of the map of indexed colors on the server.
+    /** XID of the map of indexed colors on the server. */
     Colormap colormap;
 } XRenderPictFormat;
 
 /*< XRenderPictFormat template field masks.
  * @{
  */
-/// Include ID field. @hideinitializer
+/** Include ID field. @hideinitializer */
 #define PictFormatID (1 << 0)
-/// Include Type field. @hideinitializer
+/** Include Type field. @hideinitializer */
 #define PictFormatType (1 << 1)
-/// Include Depth field. @hideinitializer
+/** Include Depth field. @hideinitializer */
 #define PictFormatDepth (1 << 2)
 
-//<--- XRenderPictFormat->direct fields.
-/// Include Direct->Red field. @hideinitializer
+/*<--- XRenderPictFormat->direct fields. */
+/** Include Direct->Red field. @hideinitializer */
 #define PictFormatRed (1 << 3)
-/// Include Direct->RedMask field. @hideinitializer
+/** Include Direct->RedMask field. @hideinitializer */
 #define PictFormatRedMask (1 << 4)
-/// Include Direct->Green field. @hideinitializer
+/** Include Direct->Green field. @hideinitializer */
 #define PictFormatGreen (1 << 5)
-/// Include Direct->GreenMask field. @hideinitializer
+/** Include Direct->GreenMask field. @hideinitializer */
 #define PictFormatGreenMask (1 << 6)
-/// Include Direct->Blue field. @hideinitializer
+/** Include Direct->Blue field. @hideinitializer */
 #define PictFormatBlue (1 << 7)
-/// Include Direct->BlueMask field. @hideinitializer
+/** Include Direct->BlueMask field. @hideinitializer */
 #define PictFormatBlueMask (1 << 8)
-/// Include Direct->Alpha field. @hideinitializer
+/** Include Direct->Alpha field. @hideinitializer */
 #define PictFormatAlpha (1 << 9)
-/// Include Direct->AlphaMask field. @hideinitializer
+/** Include Direct->AlphaMask field. @hideinitializer */
 #define PictFormatAlphaMask (1 << 10)
 
-/// Include Colormap field. @hideinitializer
+/** Include Colormap field. @hideinitializer */
 #define PictFormatColormap (1 << 11)
-/// @}
+/** @} */
 
 /**
  * Picture rendering attributes.
  */
 typedef struct _XRenderPictureAttributes {
-    /// How to repeat the picture.
+    /** How to repeat the picture. */
     int repeat;
 
-    /// A replacement alpha-map. Must be a pixmap-containing Picture.
+    /** A replacement alpha-map. Must be a pixmap-containing Picture. */
     Picture alpha_map;
-    /// Horizontal displacement of the replacement alpha-map.
+    /** Horizontal displacement of the replacement alpha-map. */
     int alpha_x_origin;
-    /// Vertical displacement of the replacement alpha-map.
+    /** Vertical displacement of the replacement alpha-map. */
     int alpha_y_origin;
 
-    /// Horizontal displacement of the clip mask.
+    /** Horizontal displacement of the clip mask. */
     int clip_x_origin;
-    /// Vertical displacement of the clip mask.
+    /** Vertical displacement of the clip mask. */
     int clip_y_origin;
-    /// A r/w restriction to the drawable.
+    /** A r/w restriction to the drawable. */
     Pixmap clip_mask;
 
-    /// Whether to receive GraphicsExpose events. @note Ignored field.
+    /** Whether to receive GraphicsExpose events. @note Ignored field. */
     Bool graphics_exposures;
-    /// How to clip pixels on subwindow overlap.
+    /** How to clip pixels on subwindow overlap. */
     int subwindow_mode;
-    /// Alpha mask generation mode.
+    /** Alpha mask generation mode. */
     int poly_edge;
-    /// Alpha value rasterization mode.
+    /** Alpha value rasterization mode. */
     int poly_mode;
-    /// Dithering mode. @note Ignored field.
+    /** Dithering mode. @note Ignored field. */
     Atom dither;
-    /// Treat alpha channels independently.
+    /** Treat alpha channels independently. */
     Bool component_alpha;
 } XRenderPictureAttributes;
 
@@ -171,13 +171,13 @@ typedef struct _XRenderPictureAttributes {
  *  client in all cases but gradient operations.
  */
 typedef struct {
-    /// Red color channel.
+    /** Red color channel. */
     unsigned short red;
-    /// Green color channel.
+    /** Green color channel. */
     unsigned short green;
-    /// Blue color channel.
+    /** Blue color channel. */
     unsigned short blue;
-    /// Alpha color channel.
+    /** Alpha color channel. */
     unsigned short alpha;
 } XRenderColor;
 
@@ -188,19 +188,19 @@ typedef struct {
  * center offset.
  */
 typedef struct _XGlyphInfo {
-    /// Glyph width.
+    /** Glyph width. */
     unsigned short width;
-    /// Glyph height.
+    /** Glyph height. */
     unsigned short height;
 
-    /// Horizontal Glyph center offset relative to the upper-left corner.
+    /** Horizontal Glyph center offset relative to the upper-left corner. */
     short x;
-    /// Vertical Glyph center offset relative to the upper-left corner.
+    /** Vertical Glyph center offset relative to the upper-left corner. */
     short y;
 
-    /// Horizontal margin to the next Glyph.
+    /** Horizontal margin to the next Glyph. */
     short xOff;
-    /// Vertical margin to the next Glyph.
+    /** Vertical margin to the next Glyph. */
     short yOff;
 } XGlyphInfo;
 
@@ -209,23 +209,23 @@ typedef struct _XGlyphInfo {
  *  While selecting the right element type, you should use as a reference the
  *  largest identifier in Elt->glyphset.
  */
-/// @{
+/** @{ */
 
 /**
  * 8-bit Glyph Element.
  */
 typedef struct _XGlyphElt8 {
-    /// Set of available glyphs.
+    /** Set of available glyphs. */
     GlyphSet glyphset;
 
-    /// 8-bit glyph id array.
+    /** 8-bit glyph id array. */
     _Xconst char *chars;
-    /// Glyph array size.
+    /** Glyph array size. */
     int nchars;
 
-    /// Horizontal offset.
+    /** Horizontal offset. */
     int xOff;
-    /// Vertical offset.
+    /** Vertical offset. */
     int yOff;
 } XGlyphElt8;
 
@@ -233,17 +233,17 @@ typedef struct _XGlyphElt8 {
  * 16-bit Glyph Element.
  */
 typedef struct _XGlyphElt16 {
-    /// Set of available glyphs.
+    /** Set of available glyphs. */
     GlyphSet glyphset;
 
-    /// 16-bit glyph id array.
+    /** 16-bit glyph id array. */
     _Xconst unsigned short *chars;
-    /// Glyph array size.
+    /** Glyph array size. */
     int nchars;
 
-    /// Horizontal offset.
+    /** Horizontal offset. */
     int xOff;
-    /// Vertical offset.
+    /** Vertical offset. */
     int yOff;
 } XGlyphElt16;
 
@@ -251,25 +251,25 @@ typedef struct _XGlyphElt16 {
  * 32-bit Glyph Element.
  */
 typedef struct _XGlyphElt32 {
-    /// Set of available glyphs.
+    /** Set of available glyphs. */
     GlyphSet glyphset;
 
-    /// 32-bit glyph id array.
+    /** 32-bit glyph id array. */
     _Xconst unsigned int *chars;
-    /// Glyph array size.
+    /** Glyph array size. */
     int nchars;
 
-    /// Horizontal offset.
+    /** Horizontal offset. */
     int xOff;
-    /// Vertical offset.
+    /** Vertical offset. */
     int yOff;
 } XGlyphElt32;
-///@}
+/**@} */
 
 /*< Utility number types.
  *
  */
-///@{
+/**@{ */
 
 /**
  * Floating-point number.
@@ -281,11 +281,11 @@ typedef double XDouble;
  */
 typedef int XFixed;
 
-/// Turn XDouble into XFixed. @hideinitializer
+/** Turn XDouble into XFixed. @hideinitializer */
 #define XDoubleToFixed(f) ((XFixed)((f)*65536))
-/// Turn XFixed into XDouble. @hideinitializer
+/** Turn XFixed into XDouble. @hideinitializer */
 #define XFixedToDouble(f) (((XDouble)(f)) / 65536)
-/// @}
+/** @} */
 
 /**
  * Point coordinates stored as floats.
@@ -348,13 +348,13 @@ typedef struct _XTransform {
  * Group filters and filter aliases.
  */
 typedef struct _XFilters {
-    /// Filter names count.
+    /** Filter names count. */
     int nfilter;
-    /// Filter names array.
+    /** Filter names array. */
     char **filter;
-    /// Aliases array count.
+    /** Aliases array count. */
     int nalias;
-    /// Array of «Index in .filter of the aliased filter or 0xffff».
+    /** Array of «Index in .filter of the aliased filter or 0xffff». */
     short *alias;
 } XFilters;
 
@@ -362,9 +362,9 @@ typedef struct _XFilters {
  * The value of an indexed color.
  */
 typedef struct _XIndexValue {
-    /// Index ID.
+    /** Index ID. */
     unsigned long pixel;
-    /// Color components.
+    /** Color components. */
     unsigned short red, green, blue, alpha;
 } XIndexValue;
 
@@ -372,9 +372,9 @@ typedef struct _XIndexValue {
  * A single cursor frame.
  */
 typedef struct _XAnimCursor {
-    /// Existing cursor.
+    /** Existing cursor. */
     Cursor cursor;
-    /// Animation delay.
+    /** Animation delay. */
     unsigned long delay;
 } XAnimCursor;
 
@@ -470,7 +470,7 @@ int XRenderQuerySubpixelOrder(Display *dpy, int screen);
  * @return True if the operation was successful.
  */
 Bool XRenderSetSubpixelOrder(Display *dpy, int screen, int subpixel);
-/// @}
+/** @} */
 
 /**
  * Ask for the Picture format for a Visual.
@@ -498,19 +498,19 @@ XRenderPictFormat *XRenderFindFormat(Display *dpy, unsigned long mask,
 /** Standard format specifiers.
  * @{
  */
-/// 8-bit RGB with Alpha. @hideinitializer
+/** 8-bit RGB with Alpha. @hideinitializer */
 #define PictStandardARGB32 0
-/// 8-bit RGB. @hideinitializer
+/** 8-bit RGB. @hideinitializer */
 #define PictStandardRGB24 1
-/// 8-bit Alpha map. @hideinitializer
+/** 8-bit Alpha map. @hideinitializer */
 #define PictStandardA8 2
-/// 4-bit Alpha map. @hideinitializer
+/** 4-bit Alpha map. @hideinitializer */
 #define PictStandardA4 3
-/// 1-bit Alpha map. @hideinitializer
+/** 1-bit Alpha map. @hideinitializer */
 #define PictStandardA1 4
-/// Supported standard formats count. @hideinitializer
+/** Supported standard formats count. @hideinitializer */
 #define PictStandardNUM 5
-/// @}
+/** @} */
 
 /**
  * Ask for a predefined standard picture format.
