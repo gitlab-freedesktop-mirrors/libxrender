@@ -34,6 +34,9 @@ AC_INIT(libXrender, [0.9.10],
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
 
+PACKAGE_BRIEF="Library for the Render Extension to the X11 protocol"
+AC_SUBST(PACKAGE_BRIEF)
+
 # Initialize Automake
 AM_INIT_AUTOMAKE([foreign dist-xz])
 
@@ -60,5 +63,6 @@ PKG_CHECK_MODULES(RENDER, [x11 >= 1.6] renderproto >= $RENDER_VERSION)
 
 AC_CONFIG_FILES([Makefile
 		src/Makefile
+		Doxyfile
 		xrender.pc])
 AC_OUTPUT
