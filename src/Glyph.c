@@ -49,7 +49,7 @@ XRenderCreateGlyphSet (Display *dpy, _Xconst XRenderPictFormat *format)
 GlyphSet
 XRenderReferenceGlyphSet (Display *dpy, GlyphSet existing)
 {
-    XRenderExtDisplayInfo             *info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo       *info = XRenderFindDisplay (dpy);
     GlyphSet                    gsid;
     xRenderReferenceGlyphSetReq	*req;
 
@@ -68,7 +68,7 @@ XRenderReferenceGlyphSet (Display *dpy, GlyphSet existing)
 void
 XRenderFreeGlyphSet (Display *dpy, GlyphSet glyphset)
 {
-    XRenderExtDisplayInfo         *info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo   *info = XRenderFindDisplay (dpy);
     xRenderFreeGlyphSetReq  *req;
 
     RenderSimpleCheckExtension (dpy, info);
@@ -90,7 +90,7 @@ XRenderAddGlyphs (Display	*dpy,
 		  _Xconst char		*images,
 		  int		nbyte_images)
 {
-    XRenderExtDisplayInfo         *info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo   *info = XRenderFindDisplay (dpy);
     xRenderAddGlyphsReq	    *req;
     long		    len;
 
@@ -118,7 +118,7 @@ XRenderFreeGlyphs (Display   *dpy,
 		   _Xconst Glyph     *gids,
 		   int       nglyphs)
 {
-    XRenderExtDisplayInfo         *info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo   *info = XRenderFindDisplay (dpy);
     xRenderFreeGlyphsReq    *req;
     long                    len;
 
@@ -150,7 +150,7 @@ XRenderCompositeString8 (Display	    *dpy,
 			 _Xconst char	    *string,
 			 int		    nchar)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     xRenderCompositeGlyphs8Req	*req;
     long			len;
     xGlyphElt			*elt;
@@ -235,7 +235,7 @@ XRenderCompositeString16 (Display	    *dpy,
 			  _Xconst unsigned short    *string,
 			  int		    nchar)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     xRenderCompositeGlyphs8Req	*req;
     long			len;
     xGlyphElt			*elt;
@@ -315,7 +315,7 @@ XRenderCompositeString32 (Display	    *dpy,
 			  _Xconst unsigned int	    *string,
 			  int		    nchar)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     xRenderCompositeGlyphs8Req	*req;
     long			len;
     xGlyphElt			*elt;
@@ -510,7 +510,7 @@ XRenderCompositeText16 (Display			    *dpy,
 			_Xconst XGlyphElt16	    *elts,
 			int			    nelt)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     xRenderCompositeGlyphs16Req	*req;
     GlyphSet			glyphset;
     long			len;
@@ -624,7 +624,7 @@ XRenderCompositeText32 (Display			    *dpy,
 			_Xconst XGlyphElt32	    *elts,
 			int			    nelt)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     xRenderCompositeGlyphs32Req	*req;
     GlyphSet			glyphset;
     long			len;

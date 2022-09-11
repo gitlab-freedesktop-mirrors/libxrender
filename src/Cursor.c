@@ -32,7 +32,7 @@ XRenderCreateCursor (Display	    *dpy,
 		     unsigned int   x,
 		     unsigned int   y)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     Cursor			cid;
     xRenderCreateCursorReq	*req;
 
@@ -56,7 +56,7 @@ XRenderCreateAnimCursor (Display	*dpy,
 			 int		ncursor,
 			 XAnimCursor	*cursors)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     Cursor			cid;
     xRenderCreateAnimCursorReq	*req;
     long			len;

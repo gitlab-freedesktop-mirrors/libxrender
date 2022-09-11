@@ -42,7 +42,7 @@ XRenderComposite (Display   *dpy,
 		  unsigned int	width,
 		  unsigned int	height)
 {
-    XRenderExtDisplayInfo         *info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo   *info = XRenderFindDisplay (dpy);
     xRenderCompositeReq	    *req;
 
     RenderSimpleCheckExtension (dpy, info);

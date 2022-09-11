@@ -30,7 +30,7 @@
 XFilters *
 XRenderQueryFilters (Display *dpy, Drawable drawable)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     XRenderInfo			*xri;
     xRenderQueryFiltersReq	*req;
     xRenderQueryFiltersReply	rep;
@@ -158,7 +158,7 @@ XRenderSetPictureFilter  (Display   *dpy,
 			  XFixed    *params,
 			  int	    nparams)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     xRenderSetPictureFilterReq	*req;
     int				nbytes = (int) strlen (filter);
 

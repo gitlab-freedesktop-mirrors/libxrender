@@ -41,7 +41,7 @@ XRenderFillRectangle (Display	    *dpy,
 		      unsigned int  width,
 		      unsigned int  height)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     xRectangle			*rect;
     xRenderFillRectanglesReq	*req;
 #ifdef MUSTCOPY

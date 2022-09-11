@@ -78,7 +78,7 @@ XRenderCreatePicture (Display			*dpy,
 		      unsigned long		valuemask,
 		      _Xconst XRenderPictureAttributes	*attributes)
 {
-    XRenderExtDisplayInfo	    *info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo   *info = XRenderFindDisplay (dpy);
     Picture		    pid;
     xRenderCreatePictureReq *req;
 
@@ -106,8 +106,8 @@ XRenderChangePicture (Display                   *dpy,
 		      unsigned long             valuemask,
 		      _Xconst XRenderPictureAttributes  *attributes)
 {
-    XRenderExtDisplayInfo	    *info = XRenderFindDisplay (dpy);
-    xRenderChangePictureReq *req;
+    XRenderExtDisplayInfo    *info = XRenderFindDisplay (dpy);
+    xRenderChangePictureReq  *req;
 
     RenderSimpleCheckExtension (dpy, info);
     LockDisplay(dpy);
@@ -204,7 +204,7 @@ XRenderSetPictureTransform (Display	*dpy,
 			    Picture	picture,
 			    XTransform	*transform)
 {
-    XRenderExtDisplayInfo		    *info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	    *info = XRenderFindDisplay (dpy);
     xRenderSetPictureTransformReq   *req;
 
     RenderSimpleCheckExtension (dpy, info);
@@ -231,7 +231,7 @@ void
 XRenderFreePicture (Display                   *dpy,
 		    Picture                   picture)
 {
-    XRenderExtDisplayInfo         *info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo   *info = XRenderFindDisplay (dpy);
     xRenderFreePictureReq   *req;
 
     RenderSimpleCheckExtension (dpy, info);
@@ -249,8 +249,8 @@ Picture XRenderCreateSolidFill(Display *dpy,
                                const XRenderColor *color)
 {
     XRenderExtDisplayInfo	    *info = XRenderFindDisplay (dpy);
-    Picture		    pid;
-    xRenderCreateSolidFillReq *req;
+    Picture			    pid;
+    xRenderCreateSolidFillReq	    *req;
 
     RenderCheckExtension (dpy, info, 0);
     LockDisplay(dpy);
@@ -277,7 +277,7 @@ Picture XRenderCreateLinearGradient(Display *dpy,
                                     int nStops)
 {
     XRenderExtDisplayInfo	    *info = XRenderFindDisplay (dpy);
-    Picture		    pid;
+    Picture			    pid;
     xRenderCreateLinearGradientReq *req;
     long			   len;
 
@@ -311,7 +311,7 @@ Picture XRenderCreateRadialGradient(Display *dpy,
                                     int nStops)
 {
     XRenderExtDisplayInfo	    *info = XRenderFindDisplay (dpy);
-    Picture		    pid;
+    Picture			    pid;
     xRenderCreateRadialGradientReq *req;
     long			   len;
 
@@ -347,7 +347,7 @@ Picture XRenderCreateConicalGradient(Display *dpy,
                                      int nStops)
 {
     XRenderExtDisplayInfo	    *info = XRenderFindDisplay (dpy);
-    Picture		    pid;
+    Picture			    pid;
     xRenderCreateConicalGradientReq *req;
     long			    len;
 

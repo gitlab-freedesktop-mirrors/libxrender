@@ -397,7 +397,7 @@ _XRenderVersionHandler (Display	    *dpy,
 Status
 XRenderQueryFormats (Display *dpy)
 {
-    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo	*info = XRenderFindDisplay (dpy);
     _XAsyncHandler		async;
     _XrenderVersionState	async_state;
     xRenderQueryVersionReq	*vreq;
@@ -864,7 +864,7 @@ XRenderQueryPictIndexValues(Display			*dpy,
 			    _Xconst XRenderPictFormat	*format,
 			    int				*num)
 {
-    XRenderExtDisplayInfo			*info = XRenderFindDisplay (dpy);
+    XRenderExtDisplayInfo		*info = XRenderFindDisplay (dpy);
     xRenderQueryPictIndexValuesReq	*req;
     xRenderQueryPictIndexValuesReply	rep;
     XIndexValue				*values;
