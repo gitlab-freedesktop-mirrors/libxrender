@@ -513,6 +513,15 @@ XRenderQueryFormats (Display *dpy)
     xri->ndepth = (int) rep.numDepths;
     xri->visual = Xcalloc(rep.numVisuals, sizeof(XRenderVisual));
     xri->nvisual = (int) rep.numVisuals;
+    if (!xri->format || !xri->screen || !xri->depth || !xri->visual)
+    {
+	XRenderFreeXRenderInfo(xri);
+	Xfree (xData);
+	_XEatDataWords (dpy, rep.length);
+	UnlockDisplay (dpy);
+	SyncHandle ();
+	return 0;
+    }
     _XRead (dpy, (char *) xData, (long) rlength);
     format = xri->format;
     xFormat = (xPictFormInfo *) xData;
